@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cmd /c \"cd /d c:\\\\Users\\\\chhab\\\\OneDrive\\\\Documents\\\\GitHub\\\\badgercricketclubwebsite && npm create vite@latest . -- --template react-ts\")",
+      "Bash(cmd /c \"cd /d c:\\\\Users\\\\chhab\\\\OneDrive\\\\Documents\\\\GitHub\\\\badgercricketclubwebsite && rename index.html original-index.html\")",
+      "Bash(cmd /c \"cd /d c:\\\\Users\\\\chhab\\\\OneDrive\\\\Documents\\\\GitHub\\\\badgercricketclubwebsite && dir\")",
+      "Bash(powershell -Command \"cd ''c:\\\\Users\\\\chhab\\\\OneDrive\\\\Documents\\\\GitHub\\\\badgercricketclubwebsite''; npm install 2>&1\")",
+      "Bash(powershell -Command:*)",
+      "Bash(powershell -NoProfile -ExecutionPolicy Bypass -Command \"[Environment]::SetEnvironmentVariable\\(''PATH'', ''C:\\\\Program Files\\\\nodejs;'' + [Environment]::GetEnvironmentVariable\\(''PATH''\\)\\); Set-Location ''c:\\\\Users\\\\chhab\\\\OneDrive\\\\Documents\\\\GitHub\\\\badgercricketclubwebsite''; & ''C:\\\\Program Files\\\\nodejs\\\\npm.cmd'' install\")",
+      "Bash(powershell -NoProfile -ExecutionPolicy Bypass -Command \"[Environment]::SetEnvironmentVariable\\(''PATH'', ''C:\\\\Program Files\\\\nodejs;'' + [Environment]::GetEnvironmentVariable\\(''PATH''\\)\\); Set-Location ''c:\\\\Users\\\\chhab\\\\OneDrive\\\\Documents\\\\GitHub\\\\badgercricketclubwebsite''; & ''C:\\\\Program Files\\\\nodejs\\\\npm.cmd'' run dev\")"
+    ]
+  }
+}
