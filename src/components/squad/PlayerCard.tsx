@@ -1,10 +1,11 @@
+import { memo } from 'react';
 import { Player } from '../../types';
 
 interface PlayerCardProps {
   player: Player;
 }
 
-export function PlayerCard({ player }: PlayerCardProps) {
+export const PlayerCard = memo(function PlayerCard({ player }: PlayerCardProps) {
   return (
     <div className="player-card h-[280px]">
       <div className="player-card-inner">
@@ -65,4 +66,4 @@ export function PlayerCard({ player }: PlayerCardProps) {
       </div>
     </div>
   );
-}
+});

@@ -1,3 +1,4 @@
+import { memo, useCallback } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { Badge } from '../common';
 
@@ -5,8 +6,12 @@ interface HeaderProps {
   onLoginClick: () => void;
 }
 
-export function Header({ onLoginClick }: HeaderProps) {
+export const Header = memo(function Header({ onLoginClick }: HeaderProps) {
   const { user, isAdmin, logout } = useAuth();
+
+  const handleLogout = useCallback(() => {
+    logout();
+  }, [logout]);
 
   return (
     <header className="bg-cricket-green text-cream sticky top-0 z-50 shadow-md">
@@ -45,7 +50,7 @@ export function Header({ onLoginClick }: HeaderProps) {
                 {user.role}
               </Badge>
               <button
-                onClick={logout}
+                onClick={handleLogout}
                 className="bg-white/20 text-cream px-4 py-2 rounded-md font-semibold flex items-center gap-2 hover:bg-white/30 transition-colors"
               >
                 <span>👋</span>
@@ -65,4 +70,4 @@ export function Header({ onLoginClick }: HeaderProps) {
       </div>
     </header>
   );
-}
+});

@@ -1,10 +1,10 @@
+import { memo, useMemo } from 'react';
 import { Countdown } from './Countdown';
 import { Button, ClawScratch } from '../common';
 
-// March 11, 2026 at 8:00 AM EST
-const TOURNAMENT_DATE = new Date('2026-03-11T08:00:00-05:00');
+export const Hero = memo(function Hero() {
+  const tournamentDate = useMemo(() => new Date('2026-03-11T08:00:00-05:00'), []);
 
-export function Hero() {
   return (
     <section
       id="home"
@@ -16,14 +16,12 @@ export function Hero() {
         size="xl"
         direction="right"
         color="#000000"
-        accentColor="#9b0000"
       />
       <ClawScratch
         className="absolute right-4 top-1/2 -translate-y-1/2 opacity-20"
         size="xl"
         direction="left"
         color="#000000"
-        accentColor="#9b0000"
       />
 
       <div className="relative z-10">
@@ -39,7 +37,7 @@ export function Hero() {
           📍 Broward County International Cricket Stadium, Florida &nbsp;|&nbsp; 📅 March 11-15, 2026
         </p>
 
-        <Countdown targetDate={TOURNAMENT_DATE} />
+        <Countdown targetDate={tournamentDate} />
 
         <div className="flex justify-center gap-4 flex-wrap">
           <Button variant="primary">🎫 Get Tickets</Button>
@@ -48,4 +46,4 @@ export function Hero() {
       </div>
     </section>
   );
-}
+});

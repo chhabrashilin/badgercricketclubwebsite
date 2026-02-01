@@ -1,4 +1,6 @@
-export function Footer() {
+import { memo } from 'react';
+
+export const Footer = memo(function Footer() {
   return (
     <footer className="bg-cricket-green-dark text-cream py-12 px-4">
       <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -61,4 +63,4 @@ export function Footer() {
       </div>
     </footer>
   );
-}
+});

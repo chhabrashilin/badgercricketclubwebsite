@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from 'react';
+import { memo, ReactNode, useEffect, useCallback } from 'react';
 
 interface ModalProps {
   isOpen: boolean;
@@ -7,7 +7,7 @@ interface ModalProps {
   title?: string;
 }
 
-export function Modal({ isOpen, onClose, children, title }: ModalProps) {
+export const Modal = memo(function Modal({ isOpen, onClose, children, title }: ModalProps) {
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -24,14 +24,16 @@ export function Modal({ isOpen, onClose, children, title }: ModalProps) {
     };
   }, [isOpen, onClose]);
 
+  const handleBackdropClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) onClose();
+  }, [onClose]);
+
   if (!isOpen) return null;
 
   return (
     <div
       className="fixed inset-0 bg-black/60 z-[1000] flex items-center justify-center p-4"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
+      onClick={handleBackdropClick}
     >
       <div className="bg-white rounded-xl p-8 max-w-md w-full shadow-2xl">
         {title && (
@@ -41,4 +43,4 @@ export function Modal({ isOpen, onClose, children, title }: ModalProps) {
       </div>
     </div>
   );
-}
+});

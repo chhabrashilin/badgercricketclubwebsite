@@ -1,8 +1,9 @@
+import { memo } from 'react';
 import { PlayerCard } from './PlayerCard';
 import { useData } from '../../context/DataContext';
 import { ClawScratch } from '../common';
 
-export function SquadSection() {
+export const SquadSection = memo(function SquadSection() {
   const { players } = useData();
 
   return (
@@ -13,14 +14,12 @@ export function SquadSection() {
         size="lg"
         direction="right"
         color="#1a1a1a"
-        accentColor="#C5050C"
       />
       <ClawScratch
         className="absolute -right-8 bottom-20 opacity-10 -rotate-12"
         size="lg"
         direction="left"
         color="#1a1a1a"
-        accentColor="#C5050C"
       />
 
       <div className="text-center mb-12 relative z-10">
@@ -42,4 +41,4 @@ export function SquadSection() {
       </div>
     </section>
   );
-}
+});

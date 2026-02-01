@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState, useCallback } from 'react';
 import { FixtureResultItem, FixtureUpcomingItem } from './FixtureItem';
 import { ScorecardModal } from './ScorecardModal';
 import { useData } from '../../context/DataContext';
@@ -6,16 +6,23 @@ import { FixtureResult } from '../../types';
 
 type Tab = 'upcoming' | 'results';
 
-export function FixturesSection() {
+export const FixturesSection = memo(function FixturesSection() {
   const { fixtureResults, fixtureUpcoming } = useData();
   const [activeTab, setActiveTab] = useState<Tab>('upcoming');
   const [selectedFixture, setSelectedFixture] = useState<FixtureResult | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleFixtureClick = (fixture: FixtureResult) => {
+  const handleFixtureClick = useCallback((fixture: FixtureResult) => {
     setSelectedFixture(fixture);
     setIsModalOpen(true);
-  };
+  }, []);
+
+  const handleCloseModal = useCallback(() => {
+    setIsModalOpen(false);
+  }, []);
+
+  const handleTabUpcoming = useCallback(() => setActiveTab('upcoming'), []);
+  const handleTabResults = useCallback(() => setActiveTab('results'), []);
 
   return (
     <section id="fixtures" className="py-16 px-4 bg-white">
@@ -30,7 +37,7 @@ export function FixturesSection() {
       <div className="flex justify-center mb-8">
         <div className="bg-cream-dark rounded-lg p-1 inline-flex">
           <button
-            onClick={() => setActiveTab('upcoming')}
+            onClick={handleTabUpcoming}
             className={`px-6 py-2 rounded-md font-medium transition-all ${
               activeTab === 'upcoming'
                 ? 'bg-cricket-green text-cream shadow-sm'
@@ -40,7 +47,7 @@ export function FixturesSection() {
             Upcoming ({fixtureUpcoming.length})
           </button>
           <button
-            onClick={() => setActiveTab('results')}
+            onClick={handleTabResults}
             className={`px-6 py-2 rounded-md font-medium transition-all ${
               activeTab === 'results'
                 ? 'bg-cricket-green text-cream shadow-sm'
@@ -72,9 +79,9 @@ export function FixturesSection() {
       {/* Scorecard Modal */}
       <ScorecardModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={handleCloseModal}
         fixture={selectedFixture}
       />
     </section>
   );
-}
+});

@@ -1,4 +1,6 @@
-export function JoinCard() {
+import { memo } from 'react';
+
+export const JoinCard = memo(function JoinCard() {
   return (
     <div className="bg-gradient-to-br from-gold to-[#b45309] rounded-xl p-6 text-cricket-green-dark mt-6">
       <h3 className="font-headline text-2xl mb-2">Join the Club</h3>
@@ -11,4 +13,4 @@ export function JoinCard() {
       </button>
     </div>
   );
-}
+});

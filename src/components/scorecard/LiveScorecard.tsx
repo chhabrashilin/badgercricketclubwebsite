@@ -1,16 +1,16 @@
-import { useState } from 'react';
+import { memo, useState, useCallback } from 'react';
 import { useScore } from '../../context/ScoreContext';
 import { ClawScratch } from '../common';
 
-export function LiveScorecard() {
+export const LiveScorecard = memo(function LiveScorecard() {
   const { matchScore, isLive, refreshScore, isLoading, lastUpdated } = useScore();
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const handleRefresh = async () => {
+  const handleRefresh = useCallback(async () => {
     setIsRefreshing(true);
     await refreshScore();
     setTimeout(() => setIsRefreshing(false), 1000);
-  };
+  }, [refreshScore]);
 
   return (
     <div id="matches" className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden relative">
@@ -42,7 +42,6 @@ export function LiveScorecard() {
         size="lg"
         direction="left"
         color="#1a1a1a"
-        accentColor="#C5050C"
       />
 
       {/* Body */}
@@ -137,4 +136,4 @@ export function LiveScorecard() {
       </div>
     </div>
   );
-}
+});
