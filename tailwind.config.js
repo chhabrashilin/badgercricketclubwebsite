@@ -13,7 +13,7 @@ export default {
         'badger-black': '#1a1a1a',
         'cream': '#fbfbfb',
         'cream-dark': '#f5f5f0',
-        'gold': '#d4af37',
+        'gold': '#d97706',
       },
       fontFamily: {
         headline: ['Playfair Display', 'Georgia', 'serif'],

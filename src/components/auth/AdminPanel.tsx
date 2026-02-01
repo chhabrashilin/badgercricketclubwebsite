@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useScore } from '../../context/ScoreContext';
 import { useData } from '../../context/DataContext';
 import { Modal } from '../common';
-import { Player, FixtureResult, FixtureUpcoming } from '../../types';
+import { Player, FixtureResult, FixtureUpcoming, SeasonOverviewStat } from '../../types';
 
 interface AdminPanelProps {
   onEditScoreClick: () => void;
@@ -12,9 +12,9 @@ interface AdminPanelProps {
 export function AdminPanel({ onEditScoreClick }: AdminPanelProps) {
   const { isAdmin } = useAuth();
   const { resetScore } = useScore();
-  const { resetAllData, fixtureResults, fixtureUpcoming, players, deleteFixtureResult, deleteFixtureUpcoming, deletePlayer } = useData();
+  const { resetAllData, fixtureResults, fixtureUpcoming, players, deleteFixtureResult, deleteFixtureUpcoming, deletePlayer, seasonOverview, updateSeasonOverview } = useData();
 
-  const [activeModal, setActiveModal] = useState<'player' | 'result' | 'upcoming' | 'manage-results' | 'manage-fixtures' | 'manage-players' | null>(null);
+  const [activeModal, setActiveModal] = useState<'player' | 'result' | 'upcoming' | 'manage-results' | 'manage-fixtures' | 'manage-players' | 'season-overview' | null>(null);
   const [editingResult, setEditingResult] = useState<FixtureResult | null>(null);
   const [editingUpcoming, setEditingUpcoming] = useState<FixtureUpcoming | null>(null);
   const [editingPlayer, setEditingPlayer] = useState<Player | null>(null);
@@ -88,6 +88,12 @@ export function AdminPanel({ onEditScoreClick }: AdminPanelProps) {
             className="bg-cricket-green text-white px-3 py-2 rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
           >
             ✏️ Edit Live Score
+          </button>
+          <button
+            onClick={() => setActiveModal('season-overview')}
+            className="bg-amber-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
+          >
+            📈 Edit Season Overview
           </button>
           <button
             onClick={handleResetScore}
@@ -260,13 +266,128 @@ export function AdminPanel({ onEditScoreClick }: AdminPanelProps) {
           </div>
         )}
       />
+
+      {/* Season Overview Modal */}
+      <SeasonOverviewModal
+        isOpen={activeModal === 'season-overview'}
+        onClose={closeModal}
+        stats={seasonOverview}
+        onSave={updateSeasonOverview}
+      />
     </>
+  );
+}
+
+function SeasonOverviewModal({ isOpen, onClose, stats, onSave }: {
+  isOpen: boolean;
+  onClose: () => void;
+  stats: SeasonOverviewStat[];
+  onSave: (stats: SeasonOverviewStat[]) => void;
+}) {
+  const [formStats, setFormStats] = useState<SeasonOverviewStat[]>(stats);
+
+  useEffect(() => {
+    if (isOpen) {
+      setFormStats(stats);
+    }
+  }, [isOpen, stats]);
+
+  const handleChange = (index: number, field: keyof SeasonOverviewStat, value: string) => {
+    setFormStats(prev => prev.map((item, i) => (
+      i === index ? { ...item, [field]: value } : item
+    )));
+  };
+
+  const handleAdd = () => {
+    setFormStats(prev => [...prev, { label: '', value: '' }]);
+  };
+
+  const handleRemove = (index: number) => {
+    setFormStats(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const cleaned = formStats
+      .map(stat => ({ label: stat.label.trim(), value: stat.value.trim() }))
+      .filter(stat => stat.label && stat.value);
+
+    if (cleaned.length === 0) {
+      alert('Please add at least one stat.');
+      return;
+    }
+
+    onSave(cleaned);
+    onClose();
+  };
+
+  const handleClose = () => {
+    setFormStats(stats);
+    onClose();
+  };
+
+  return (
+    <Modal isOpen={isOpen} onClose={handleClose} title="Edit Season Overview">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {formStats.map((stat, index) => (
+          <div key={`${stat.label}-${index}`} className="grid grid-cols-[1fr_140px_auto] gap-2 items-center">
+            <input
+              type="text"
+              value={stat.label}
+              onChange={(e) => handleChange(index, 'label', e.target.value)}
+              className="w-full px-3 py-2 border rounded-md"
+              placeholder="Label"
+              required
+            />
+            <input
+              type="text"
+              value={stat.value}
+              onChange={(e) => handleChange(index, 'value', e.target.value)}
+              className="w-full px-3 py-2 border rounded-md"
+              placeholder="Value"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => handleRemove(index)}
+              className="px-3 py-2 bg-red-600 text-white rounded-md font-semibold hover:opacity-90"
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+
+        <button
+          type="button"
+          onClick={handleAdd}
+          className="w-full py-2 bg-gray-100 text-gray-700 rounded-md font-semibold hover:bg-gray-200"
+        >
+          + Add Stat
+        </button>
+
+        <div className="flex gap-2 pt-2 border-t">
+          <button
+            type="submit"
+            className="flex-1 py-2 bg-cricket-green text-white rounded-md font-semibold hover:opacity-90"
+          >
+            Save Changes
+          </button>
+          <button
+            type="button"
+            onClick={handleClose}
+            className="flex-1 py-2 bg-gray-200 text-gray-700 rounded-md font-semibold hover:bg-gray-300"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </Modal>
   );
 }
 
 // Add/Edit Player Modal
 function AddPlayerModal({ isOpen, onClose, editingPlayer }: { isOpen: boolean; onClose: () => void; editingPlayer?: Player | null }) {
-  const { addPlayer, updatePlayer } = useData();
+  const { addPlayer, updatePlayer, deletePlayer } = useData();
   const isEditing = !!editingPlayer;
 
   const getDefaultForm = (): Partial<Player> => ({
@@ -278,6 +399,7 @@ function AddPlayerModal({ isOpen, onClose, editingPlayer }: { isOpen: boolean; o
     wickets: 0,
     battingAvg: undefined,
     bowlingAvg: undefined,
+    runsConceded: undefined,
     dismissals: undefined
   });
 
@@ -287,7 +409,12 @@ function AddPlayerModal({ isOpen, onClose, editingPlayer }: { isOpen: boolean; o
 
   // Update form when editing player changes
   if (isEditing && editingPlayer && originalName !== editingPlayer.name) {
-    setForm(editingPlayer);
+    const inferredRunsConceded = editingPlayer.runsConceded ?? (
+      editingPlayer.bowlingAvg && editingPlayer.wickets
+        ? Math.round(editingPlayer.bowlingAvg * editingPlayer.wickets)
+        : undefined
+    );
+    setForm({ ...editingPlayer, runsConceded: inferredRunsConceded });
     setOriginalName(editingPlayer.name);
   }
 
@@ -298,6 +425,14 @@ function AddPlayerModal({ isOpen, onClose, editingPlayer }: { isOpen: boolean; o
       return;
     }
 
+    const computedBattingAvg = form.matches && form.matches > 0
+      ? Number(((form.runs || 0) / form.matches).toFixed(2))
+      : undefined;
+
+    const computedBowlingAvg = form.wickets && form.wickets > 0 && form.runsConceded !== undefined
+      ? Number((form.runsConceded / form.wickets).toFixed(2))
+      : undefined;
+
     const playerData: Player = {
       name: form.name,
       role: form.role,
@@ -305,8 +440,9 @@ function AddPlayerModal({ isOpen, onClose, editingPlayer }: { isOpen: boolean; o
       matches: form.matches || 0,
       runs: form.runs || 0,
       wickets: form.wickets,
-      battingAvg: form.battingAvg,
-      bowlingAvg: form.bowlingAvg,
+      battingAvg: computedBattingAvg,
+      bowlingAvg: computedBowlingAvg,
+      runsConceded: form.runsConceded,
       dismissals: form.dismissals
     };
 
@@ -328,9 +464,23 @@ function AddPlayerModal({ isOpen, onClose, editingPlayer }: { isOpen: boolean; o
     onClose();
   };
 
+  const handleDelete = () => {
+    if (!originalName) return;
+    if (confirm('Delete this player profile? This cannot be undone.')) {
+      deletePlayer(originalName);
+      setForm(getDefaultForm());
+      setOriginalName(null);
+      onClose();
+    }
+  };
+
   // Auto-calculate batting average if matches and runs are provided
-  const calculatedBattingAvg = form.matches && form.matches > 0 && form.runs
-    ? (form.runs / form.matches).toFixed(2)
+  const calculatedBattingAvg = form.matches && form.matches > 0
+    ? ((form.runs || 0) / form.matches).toFixed(2)
+    : null;
+
+  const calculatedBowlingAvg = form.wickets && form.wickets > 0 && form.runsConceded !== undefined
+    ? (form.runsConceded / form.wickets).toFixed(2)
     : null;
 
   return (
@@ -381,7 +531,7 @@ function AddPlayerModal({ isOpen, onClose, editingPlayer }: { isOpen: boolean; o
         {/* Stats Section */}
         <div className="border-t pt-4">
           <h4 className="text-sm font-semibold text-gray-700 mb-3">Career Statistics</h4>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-4 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-600 mb-1">Matches</label>
               <input
@@ -412,6 +562,16 @@ function AddPlayerModal({ isOpen, onClose, editingPlayer }: { isOpen: boolean; o
                 min="0"
               />
             </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-600 mb-1">Runs Conceded</label>
+              <input
+                type="number"
+                value={form.runsConceded ?? ''}
+                onChange={(e) => setForm({ ...form, runsConceded: parseInt(e.target.value) || 0 })}
+                className="w-full px-3 py-2 border rounded-md"
+                min="0"
+              />
+            </div>
           </div>
         </div>
 
@@ -424,24 +584,24 @@ function AddPlayerModal({ isOpen, onClose, editingPlayer }: { isOpen: boolean; o
               <input
                 type="number"
                 step="0.01"
-                value={form.battingAvg || ''}
-                onChange={(e) => setForm({ ...form, battingAvg: parseFloat(e.target.value) || undefined })}
-                className="w-full px-3 py-2 border rounded-md"
-                placeholder={calculatedBattingAvg ? `Calculated: ${calculatedBattingAvg}` : ''}
+                value={calculatedBattingAvg || ''}
+                readOnly
+                className="w-full px-3 py-2 border rounded-md bg-gray-100 text-gray-700"
+                placeholder={calculatedBattingAvg ? '' : 'Auto-calculated'}
               />
-              {calculatedBattingAvg && !form.battingAvg && (
-                <p className="text-xs text-gray-500 mt-1">Auto-calculated: {calculatedBattingAvg}</p>
-              )}
+              <p className="text-xs text-gray-500 mt-1">Auto-calculated from matches and runs</p>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-600 mb-1">Bowling Avg</label>
               <input
                 type="number"
                 step="0.01"
-                value={form.bowlingAvg || ''}
-                onChange={(e) => setForm({ ...form, bowlingAvg: parseFloat(e.target.value) || undefined })}
-                className="w-full px-3 py-2 border rounded-md"
+                value={calculatedBowlingAvg || ''}
+                readOnly
+                className="w-full px-3 py-2 border rounded-md bg-gray-100 text-gray-700"
+                placeholder={calculatedBowlingAvg ? '' : 'Auto-calculated'}
               />
+              <p className="text-xs text-gray-500 mt-1">Auto-calculated from wickets and runs conceded</p>
             </div>
           </div>
         </div>
@@ -470,6 +630,15 @@ function AddPlayerModal({ isOpen, onClose, editingPlayer }: { isOpen: boolean; o
           >
             {isEditing ? 'Update Player' : 'Add Player'}
           </button>
+          {isEditing && (
+            <button
+              type="button"
+              onClick={handleDelete}
+              className="flex-1 py-2 bg-red-600 text-white rounded-md font-semibold hover:opacity-90"
+            >
+              Delete Player
+            </button>
+          )}
           <button
             type="button"
             onClick={handleClose}

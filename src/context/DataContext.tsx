@@ -1,12 +1,14 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Player, FixtureResult, FixtureUpcoming } from '../types';
+import { Player, FixtureResult, FixtureUpcoming, SeasonOverviewStat } from '../types';
 import { players as defaultPlayers } from '../data/players';
 import { fixtureResults as defaultResults, fixtureUpcoming as defaultUpcoming } from '../data/fixtures';
+import { seasonOverview as defaultSeasonOverview } from '../data/seasonOverview';
 
 interface DataContextType {
   players: Player[];
   fixtureResults: FixtureResult[];
   fixtureUpcoming: FixtureUpcoming[];
+  seasonOverview: SeasonOverviewStat[];
   addPlayer: (player: Player) => void;
   updatePlayer: (nameOrIndex: string | number, player: Player) => void;
   deletePlayer: (nameOrIndex: string | number) => void;
@@ -16,6 +18,7 @@ interface DataContextType {
   addFixtureUpcoming: (fixture: FixtureUpcoming) => void;
   updateFixtureUpcoming: (dateOrIndex: string | number, fixture: FixtureUpcoming) => void;
   deleteFixtureUpcoming: (dateOrIndex: string | number) => void;
+  updateSeasonOverview: (stats: SeasonOverviewStat[]) => void;
   resetAllData: () => void;
 }
 
@@ -24,7 +27,8 @@ const DataContext = createContext<DataContextType | undefined>(undefined);
 const STORAGE_KEYS = {
   players: 'badgercc_players',
   results: 'badgercc_results',
-  upcoming: 'badgercc_upcoming'
+  upcoming: 'badgercc_upcoming',
+  seasonOverview: 'badgercc_season_overview'
 };
 
 export function DataProvider({ children }: { children: ReactNode }) {
@@ -43,6 +47,11 @@ export function DataProvider({ children }: { children: ReactNode }) {
     return saved ? JSON.parse(saved) : defaultUpcoming;
   });
 
+  const [seasonOverview, setSeasonOverview] = useState<SeasonOverviewStat[]>(() => {
+    const saved = localStorage.getItem(STORAGE_KEYS.seasonOverview);
+    return saved ? JSON.parse(saved) : defaultSeasonOverview;
+  });
+
   // Persist to localStorage whenever data changes
   useEffect(() => {
     localStorage.setItem(STORAGE_KEYS.players, JSON.stringify(players));
@@ -55,6 +64,10 @@ export function DataProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     localStorage.setItem(STORAGE_KEYS.upcoming, JSON.stringify(fixtureUpcoming));
   }, [fixtureUpcoming]);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.seasonOverview, JSON.stringify(seasonOverview));
+  }, [seasonOverview]);
 
   // Player operations
   const addPlayer = (player: Player) => {
@@ -125,14 +138,20 @@ export function DataProvider({ children }: { children: ReactNode }) {
     }));
   };
 
+  const updateSeasonOverview = (stats: SeasonOverviewStat[]) => {
+    setSeasonOverview(stats);
+  };
+
   // Reset all data to defaults
   const resetAllData = () => {
     setPlayers(defaultPlayers);
     setFixtureResults(defaultResults);
     setFixtureUpcoming(defaultUpcoming);
+    setSeasonOverview(defaultSeasonOverview);
     localStorage.removeItem(STORAGE_KEYS.players);
     localStorage.removeItem(STORAGE_KEYS.results);
     localStorage.removeItem(STORAGE_KEYS.upcoming);
+    localStorage.removeItem(STORAGE_KEYS.seasonOverview);
   };
 
   return (
@@ -141,6 +160,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
         players,
         fixtureResults,
         fixtureUpcoming,
+        seasonOverview,
         addPlayer,
         updatePlayer,
         deletePlayer,
@@ -150,6 +170,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
         addFixtureUpcoming,
         updateFixtureUpcoming,
         deleteFixtureUpcoming,
+        updateSeasonOverview,
         resetAllData
       }}
     >

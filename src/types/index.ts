@@ -8,11 +8,17 @@ export interface Player {
   role: string;
   battingAvg?: number;
   bowlingAvg?: number;
+  runsConceded?: number;
   bio: string;
   matches: number;
   runs: number;
   wickets?: number;
   dismissals?: number;
+}
+
+export interface SeasonOverviewStat {
+  label: string;
+  value: string;
 }
 
 export type MatchCategory = 'league' | 'tournament' | 'friendly' | 'cup';
