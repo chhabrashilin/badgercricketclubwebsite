@@ -1,6 +1,6 @@
 import { memo, useCallback } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { Badge } from '../common';
+import { Badge, LogOutIcon, LockIcon } from '../common';
 
 interface HeaderProps {
   onLoginClick: () => void;
@@ -18,8 +18,8 @@ export const Header = memo(function Header({ onLoginClick }: HeaderProps) {
       <div className="max-w-[1200px] mx-auto px-4 flex items-center justify-between h-[70px]">
         {/* Logo */}
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-cream rounded-full flex items-center justify-center text-2xl">
-            🦡
+          <div className="w-12 h-12 bg-cream rounded-full flex items-center justify-center">
+            <span className="text-cricket-green font-bold text-xl">BC</span>
           </div>
           <div>
             <h1 className="font-headline text-2xl font-bold">Badger CC</h1>
@@ -53,7 +53,7 @@ export const Header = memo(function Header({ onLoginClick }: HeaderProps) {
                 onClick={handleLogout}
                 className="bg-white/20 text-cream px-4 py-2 rounded-md font-semibold flex items-center gap-2 hover:bg-white/30 transition-colors"
               >
-                <span>👋</span>
+                <LogOutIcon size={16} />
                 <span className="hidden sm:inline">Logout ({user.username})</span>
               </button>
             </div>
@@ -62,7 +62,7 @@ export const Header = memo(function Header({ onLoginClick }: HeaderProps) {
               onClick={onLoginClick}
               className="bg-gold text-cricket-green-dark px-4 py-2 rounded-md font-semibold flex items-center gap-2 hover:opacity-90 transition-opacity"
             >
-              <span>🔐</span>
+              <LockIcon size={16} />
               <span>Login</span>
             </button>
           )}

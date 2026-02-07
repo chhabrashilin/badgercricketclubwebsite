@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { MapPinIcon, MailIcon, PhoneIcon } from '../common';
 
 export const Footer = memo(function Footer() {
   return (
@@ -7,8 +8,8 @@ export const Footer = memo(function Footer() {
         {/* Brand */}
         <div>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 bg-cream rounded-full flex items-center justify-center text-2xl">
-              🦡
+            <div className="w-12 h-12 bg-cream rounded-full flex items-center justify-center">
+              <span className="text-cricket-green font-bold text-xl">BC</span>
             </div>
             <div>
               <h3 className="font-headline text-xl font-bold">Badger Cricket Club</h3>
@@ -51,9 +52,9 @@ export const Footer = memo(function Footer() {
         <div>
           <h4 className="text-gold font-semibold mb-4">Contact</h4>
           <div className="space-y-2 text-sm opacity-70">
-            <p>📍 Reindahl Park, Madison</p>
-            <p>✉️ info@badgercc.co.uk</p>
-            <p>📞 01234 567 890</p>
+            <p className="flex items-center gap-2"><MapPinIcon size={14} /> Reindahl Park, Madison</p>
+            <p className="flex items-center gap-2"><MailIcon size={14} /> info@badgercc.co.uk</p>
+            <p className="flex items-center gap-2"><PhoneIcon size={14} /> 01234 567 890</p>
           </div>
         </div>
       </div>

@@ -11,8 +11,8 @@ export const PlayerCard = memo(function PlayerCard({ player }: PlayerCardProps) 
       <div className="player-card-inner">
         {/* Front */}
         <div className="player-front">
-          <div className="w-16 h-16 bg-cricket-green rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
-            🦡
+          <div className="w-16 h-16 bg-cricket-green rounded-full flex items-center justify-center mx-auto mb-4">
+            <span className="text-cream font-bold text-xl">{player.name.split(' ').map(n => n[0]).join('')}</span>
           </div>
           <h3 className="font-headline text-xl text-center mb-1">{player.name}</h3>
           <p className="text-cricket-green text-sm text-center font-medium mb-auto">
@@ -42,22 +42,22 @@ export const PlayerCard = memo(function PlayerCard({ player }: PlayerCardProps) 
 
         {/* Back */}
         <div className="player-back">
-          <h3 className="font-headline text-gold text-xl mb-2">{player.name}</h3>
-          <p className="text-sm opacity-90 flex-1">{player.bio}</p>
+          <h3 className="font-headline text-white text-xl mb-2">{player.name}</h3>
+          <p className="text-sm text-white/90 flex-1">{player.bio}</p>
           <div className="grid grid-cols-3 gap-2 pt-4 border-t border-white/20 mt-auto text-center">
             <div>
-              <div className="text-lg font-bold text-gold">{player.matches}</div>
-              <div className="text-xs opacity-70">Matches</div>
+              <div className="text-lg font-bold text-white">{player.matches}</div>
+              <div className="text-xs text-white/70">Matches</div>
             </div>
             <div>
-              <div className="text-lg font-bold text-gold">{player.runs}</div>
-              <div className="text-xs opacity-70">Runs</div>
+              <div className="text-lg font-bold text-white">{player.runs}</div>
+              <div className="text-xs text-white/70">Runs</div>
             </div>
             <div>
-              <div className="text-lg font-bold text-gold">
+              <div className="text-lg font-bold text-white">
                 {player.wickets ?? player.dismissals ?? '-'}
               </div>
-              <div className="text-xs opacity-70">
+              <div className="text-xs text-white/70">
                 {player.dismissals ? 'Dismissals' : 'Wickets'}
               </div>
             </div>

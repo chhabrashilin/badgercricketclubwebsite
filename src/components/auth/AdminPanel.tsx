@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useScore } from '../../context/ScoreContext';
 import { useData } from '../../context/DataContext';
-import { Modal } from '../common';
+import { Modal, SettingsIcon, EditIcon, RefreshIcon, UserPlusIcon, CalendarIcon, AlertTriangleIcon, TrophyIcon, ClipboardIcon } from '../common';
 import { Player, FixtureResult, FixtureUpcoming, SeasonOverviewStat } from '../../types';
 
 interface AdminPanelProps {
@@ -79,7 +79,7 @@ export function AdminPanel({ onEditScoreClick }: AdminPanelProps) {
     <>
       <div className="bg-yellow-50 border border-yellow-400 rounded-lg p-4 mb-4">
         <h4 className="text-yellow-800 font-semibold mb-3 text-sm flex items-center gap-2">
-          <span>⚙️</span> Admin Controls
+          <SettingsIcon size={16} /> Admin Controls
         </h4>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3">
@@ -87,43 +87,43 @@ export function AdminPanel({ onEditScoreClick }: AdminPanelProps) {
             onClick={onEditScoreClick}
             className="bg-cricket-green text-white px-3 py-2 rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
           >
-            ✏️ Edit Live Score
+            <EditIcon size={14} /> Edit Live Score
           </button>
           <button
             onClick={() => setActiveModal('season-overview')}
             className="bg-amber-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
           >
-            📈 Edit Season Overview
+            <TrophyIcon size={14} /> Edit Season Overview
           </button>
           <button
             onClick={handleResetScore}
             className="bg-gray-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
           >
-            🔄 Reset Score
+            <RefreshIcon size={14} /> Reset Score
           </button>
           <button
             onClick={() => { setEditingPlayer(null); setActiveModal('player'); }}
             className="bg-blue-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
           >
-            👤 Add Player
+            <UserPlusIcon size={14} /> Add Player
           </button>
           <button
             onClick={() => { setEditingResult(null); setActiveModal('result'); }}
             className="bg-green-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
           >
-            📊 Add Result
+            <TrophyIcon size={14} /> Add Result
           </button>
           <button
             onClick={() => { setEditingUpcoming(null); setActiveModal('upcoming'); }}
             className="bg-purple-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
           >
-            📅 Add Fixture
+            <CalendarIcon size={14} /> Add Fixture
           </button>
           <button
             onClick={handleResetAllData}
             className="bg-red-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
           >
-            ⚠️ Reset All
+            <AlertTriangleIcon size={14} /> Reset All
           </button>
         </div>
 
@@ -133,19 +133,19 @@ export function AdminPanel({ onEditScoreClick }: AdminPanelProps) {
             onClick={() => setActiveModal('manage-players')}
             className="bg-white text-blue-700 border border-blue-300 px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-50 transition-colors"
           >
-            📋 Manage Players ({players.length})
+            <ClipboardIcon size={14} /> Manage Players ({players.length})
           </button>
           <button
             onClick={() => setActiveModal('manage-results')}
             className="bg-white text-green-700 border border-green-300 px-3 py-2 rounded-md text-sm font-medium hover:bg-green-50 transition-colors"
           >
-            📋 Manage Results ({fixtureResults.length})
+            <ClipboardIcon size={14} /> Manage Results ({fixtureResults.length})
           </button>
           <button
             onClick={() => setActiveModal('manage-fixtures')}
             className="bg-white text-purple-700 border border-purple-300 px-3 py-2 rounded-md text-sm font-medium hover:bg-purple-50 transition-colors"
           >
-            📋 Manage Fixtures ({fixtureUpcoming.length})
+            <ClipboardIcon size={14} /> Manage Fixtures ({fixtureUpcoming.length})
           </button>
         </div>
       </div>

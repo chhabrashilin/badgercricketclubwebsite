@@ -1,6 +1,6 @@
 import { memo, useState, useCallback } from 'react';
 import { useScore } from '../../context/ScoreContext';
-import { ClawScratch } from '../common';
+import { ClawScratch, RefreshIcon } from '../common';
 
 export const LiveScorecard = memo(function LiveScorecard() {
   const { matchScore, isLive, refreshScore, isLoading, lastUpdated } = useScore();
@@ -31,7 +31,7 @@ export const LiveScorecard = memo(function LiveScorecard() {
           disabled={isLoading}
           className="flex items-center gap-2 text-cream hover:text-gold transition-colors disabled:opacity-50"
         >
-          <span className={isRefreshing ? 'animate-spin-once' : ''}>🔄</span>
+          <RefreshIcon size={16} className={isRefreshing ? 'animate-spin-once' : ''} />
           <span>Refresh</span>
         </button>
       </div>

@@ -1,4 +1,4 @@
-import { Modal } from '../common';
+import { Modal, MapPinIcon, TrophyIcon } from '../common';
 import { FixtureResult } from '../../types';
 
 interface ScorecardModalProps {
@@ -97,16 +97,15 @@ export function ScorecardModal({ isOpen, onClose, fixture }: ScorecardModalProps
           <p className="text-sm font-medium text-purple-600 mb-2">{fixture.tournamentName}</p>
         )}
 
-        <span className={`inline-block px-4 py-1 rounded-full text-sm font-semibold mb-4 ${
-          isWon ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-        }`}>
+        <span className={`inline-block px-4 py-1 rounded-full text-sm font-semibold mb-4 ${isWon ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+          }`}>
           {isWon ? 'VICTORY' : 'DEFEAT'}
         </span>
         <h2 className="font-headline text-2xl text-badger-black">
           Badger CC vs {fixture.opponent}
         </h2>
         <p className="text-gray-500 text-sm mt-1">{date}</p>
-        <p className="text-gray-500 text-sm">📍 {fixture.venue}</p>
+        <p className="text-gray-500 text-sm flex items-center justify-center gap-1"><MapPinIcon size={12} /> {fixture.venue}</p>
       </div>
 
       {/* Scorecard */}
@@ -154,7 +153,7 @@ export function ScorecardModal({ isOpen, onClose, fixture }: ScorecardModalProps
       <div className="text-center py-4 border-t border-gray-200">
         <p className="text-lg font-semibold text-badger-black">{fixture.result}</p>
         <p className="text-sm text-gray-500 mt-2">
-          {isWon ? '🏆 Another great win for the Badgers!' : 'Better luck next time!'}
+          {isWon ? <><TrophyIcon size={16} className="inline" /> Another great win for the Badgers!</> : 'Better luck next time!'}
         </p>
       </div>
 

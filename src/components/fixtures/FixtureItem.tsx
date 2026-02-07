@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Badge } from '../common';
+import { Badge, MapPinIcon, TrophyIcon } from '../common';
 import { FixtureResult, FixtureUpcoming } from '../../types';
 import { CATEGORY_COLORS, CATEGORY_LABELS, formatFixtureDate } from '../../constants';
 
@@ -41,9 +41,13 @@ export const FixtureResultItem = memo(function FixtureResultItem({ fixture, onCl
         <div className="font-headline text-lg font-semibold mb-1">
           Badger CC vs {fixture.opponent}
         </div>
-        <div className="text-sm text-gray-600">📍 {fixture.venue}</div>
+        <div className="text-sm text-gray-600 flex items-center gap-1">
+          <MapPinIcon size={12} /> {fixture.venue}
+        </div>
         {fixture.tournamentName && (
-          <div className="text-xs text-purple-600 mt-1">🏆 {fixture.tournamentName}</div>
+          <div className="text-xs text-purple-600 mt-1 flex items-center gap-1">
+            <TrophyIcon size={12} /> {fixture.tournamentName}
+          </div>
         )}
       </div>
 
@@ -86,9 +90,13 @@ export const FixtureUpcomingItem = memo(function FixtureUpcomingItem({ fixture }
         <div className="font-headline text-lg font-semibold mb-1">
           Badger CC vs {fixture.opponent}
         </div>
-        <div className="text-sm text-gray-600">📍 {fixture.venue}</div>
+        <div className="text-sm text-gray-600 flex items-center gap-1">
+          <MapPinIcon size={12} /> {fixture.venue}
+        </div>
         {fixture.tournamentName && (
-          <div className="text-xs text-purple-600 mt-1">🏆 {fixture.tournamentName}</div>
+          <div className="text-xs text-purple-600 mt-1 flex items-center gap-1">
+            <TrophyIcon size={12} /> {fixture.tournamentName}
+          </div>
         )}
       </div>
 

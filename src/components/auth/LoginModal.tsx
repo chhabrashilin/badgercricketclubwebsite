@@ -35,7 +35,7 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={handleClose} title="🦡 Member Login">
+    <Modal isOpen={isOpen} onClose={handleClose} title="Member Login">
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block mb-2 font-medium text-gray-600">Username</label>

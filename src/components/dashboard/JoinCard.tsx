@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { UserPlusIcon } from '../common';
 
 export const JoinCard = memo(function JoinCard() {
   return (
@@ -8,8 +9,9 @@ export const JoinCard = memo(function JoinCard() {
         Become a member of Badger CC and enjoy exclusive benefits, match day access,
         and be part of our cricket family.
       </p>
-      <button className="w-full bg-cricket-green text-cream py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
-        👤 Apply for Membership
+      <button className="w-full bg-cricket-green text-cream py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+        <UserPlusIcon size={18} />
+        <span>Apply for Membership</span>
       </button>
     </div>
   );
