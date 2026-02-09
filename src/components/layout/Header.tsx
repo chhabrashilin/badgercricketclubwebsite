@@ -112,7 +112,7 @@ export const Header = memo(function Header({ onLoginClick }: HeaderProps) {
               {[1, 2, 3].map((star) => (
                 <svg
                   key={star}
-                  className={`w-7 h-7 ${star === 3 ? 'text-[#d4af37]' : 'text-[#1e3a5f]'}`}
+                  className={`w-7 h-7 ${star === 1 ? 'text-[#d4af37]' : 'text-[#1e3a5f]'}`}
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
