@@ -10,7 +10,7 @@ interface NewsCardProps {
 export const NewsCard = memo(function NewsCard({ image, headline, category, date }: NewsCardProps) {
   return (
     <article className="group cursor-pointer">
-      <div className="relative aspect-[16/10] overflow-hidden rounded-lg mb-4">
+      <div className="relative aspect-[16/10] overflow-hidden rounded-xl mb-4">
         <img
           src={image}
           alt={headline}
@@ -19,14 +19,14 @@ export const NewsCard = memo(function NewsCard({ image, headline, category, date
       </div>
       <div className="px-1">
         <div className="flex items-center gap-3 mb-2">
-          <span className="text-cricket-green text-xs font-semibold uppercase tracking-wide">
+          <span className="text-blue-600 text-sm font-medium">
             {category}
           </span>
           {date && (
-            <span className="text-gray-400 text-xs">{date}</span>
+            <span className="text-gray-400 text-sm">{date}</span>
           )}
         </div>
-        <h3 className="font-headline text-lg font-bold text-gray-900 leading-snug group-hover:text-cricket-green transition-colors">
+        <h3 className="text-[17px] font-normal text-gray-900 leading-snug group-hover:text-blue-700 transition-colors">
           {headline}
         </h3>
       </div>

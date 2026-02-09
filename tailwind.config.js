@@ -17,7 +17,7 @@ export default {
       },
       fontFamily: {
         headline: ['Playfair Display', 'Georgia', 'serif'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['DM Sans', 'system-ui', 'sans-serif'],
       },
       animation: {
         'pulse-dot': 'pulse 2s infinite',

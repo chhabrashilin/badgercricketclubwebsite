@@ -3,7 +3,6 @@ import { memo } from 'react';
 interface FeaturedNews {
   image: string;
   headline: string;
-  category?: string;
 }
 
 export const Hero = memo(function Hero() {
@@ -14,11 +13,11 @@ export const Hero = memo(function Hero() {
 
   return (
     <section id="news" className="bg-white">
-      <div className="max-w-[1400px] mx-auto px-4 py-8">
+      <div className="max-w-[1400px] mx-auto px-6 py-10">
         {/* Featured News Card */}
-        <div className="grid grid-cols-1 lg:grid-cols-[65%_35%] gap-0">
+        <div className="grid grid-cols-1 lg:grid-cols-[65%_35%] gap-0 items-center">
           {/* Featured Image */}
-          <div className="relative aspect-[16/10] lg:aspect-auto lg:min-h-[500px] overflow-hidden rounded-lg">
+          <div className="relative aspect-[16/10] lg:aspect-[16/11] overflow-hidden rounded-xl">
             <img
               src={featuredNews.image}
               alt={featuredNews.headline}
@@ -27,8 +26,8 @@ export const Hero = memo(function Hero() {
           </div>
 
           {/* Featured Content */}
-          <div className="flex flex-col justify-center px-6 py-8 lg:px-12 lg:py-0">
-            <h2 className="font-sans text-2xl lg:text-[28px] font-medium text-blue-700 leading-snug cursor-pointer hover:text-blue-800 transition-colors">
+          <div className="flex flex-col justify-center px-6 py-10 lg:px-14 lg:py-0">
+            <h2 className="text-[28px] lg:text-[34px] font-normal text-blue-700 leading-tight cursor-pointer hover:text-blue-800 transition-colors tracking-tight">
               {featuredNews.headline}
             </h2>
           </div>

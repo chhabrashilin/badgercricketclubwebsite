@@ -80,44 +80,44 @@ export const Header = memo(function Header({ onLoginClick }: HeaderProps) {
   return (
     <>
       <header className="bg-white sticky top-0 z-50 border-b border-gray-100">
-        <div className="max-w-[1400px] mx-auto px-4 flex items-center justify-between h-[60px]">
+        <div className="max-w-[1400px] mx-auto px-6 flex items-center justify-between h-[70px]">
           {/* Left: Menu + Logo */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="w-10 h-10 flex items-center justify-center hover:bg-gray-100 rounded-lg transition-colors"
+              className="w-11 h-11 flex items-center justify-center hover:bg-gray-100 rounded-lg transition-colors"
               aria-label="Toggle menu"
             >
               {isMenuOpen ? (
-                <XIcon size={20} className="text-gray-700" />
+                <XIcon size={22} className="text-gray-800" />
               ) : (
-                <MenuIcon size={20} className="text-gray-700" />
+                <MenuIcon size={22} className="text-gray-800" />
               )}
             </button>
 
             {/* Logo */}
             <a href="#home" className="flex items-center gap-2">
-              <div className="w-9 h-9 bg-cricket-green rounded-full flex items-center justify-center border-2 border-cricket-green">
-                <span className="text-white font-bold text-sm">BC</span>
+              <div className="w-10 h-10 bg-cricket-green rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-base">BC</span>
               </div>
             </a>
 
             {/* Divider */}
-            <div className="h-6 w-px bg-gray-200 mx-1" />
+            <div className="h-7 w-px bg-gray-300 mx-1" />
 
             {/* Badge */}
-            <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
-              <span className="text-[10px] font-bold text-gray-700">25</span>
+            <div className="w-9 h-9 rounded-full border-2 border-gray-400 flex items-center justify-center">
+              <span className="text-xs font-bold text-gray-700">25</span>
             </div>
           </div>
 
           {/* Center: Navigation */}
-          <nav className="hidden lg:flex items-center gap-6">
+          <nav className="hidden lg:flex items-center gap-5">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="text-gray-800 hover:text-cricket-green text-[13px] font-medium transition-colors"
+                className="text-gray-600 hover:text-gray-900 text-[14px] font-normal transition-colors"
               >
                 {link.label}
               </a>
@@ -125,22 +125,22 @@ export const Header = memo(function Header({ onLoginClick }: HeaderProps) {
           </nav>
 
           {/* Right: Sponsors + Auth */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-5">
             {/* Sponsor text */}
-            <span className="hidden md:block text-[11px] text-gray-500 font-medium">
+            <span className="hidden md:block text-xs text-gray-500 font-normal">
               Sponsor
             </span>
 
             {/* Sponsor logo placeholder */}
-            <div className="hidden md:flex w-8 h-8 items-center justify-center">
-              <svg viewBox="0 0 24 24" className="w-6 h-6 text-gray-800" fill="currentColor">
+            <div className="hidden md:flex w-9 h-9 items-center justify-center">
+              <svg viewBox="0 0 24 24" className="w-7 h-7 text-gray-900" fill="currentColor">
                 <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
               </svg>
             </div>
 
             {/* Three dots menu */}
-            <button className="hidden md:flex w-8 h-8 items-center justify-center hover:bg-gray-100 rounded-lg">
-              <svg className="w-4 h-4 text-gray-600" viewBox="0 0 24 24" fill="currentColor">
+            <button className="hidden md:flex w-9 h-9 items-center justify-center hover:bg-gray-100 rounded-lg">
+              <svg className="w-5 h-5 text-gray-700" viewBox="0 0 24 24" fill="currentColor">
                 <circle cx="12" cy="5" r="2" />
                 <circle cx="12" cy="12" r="2" />
                 <circle cx="12" cy="19" r="2" />
@@ -151,17 +151,17 @@ export const Header = memo(function Header({ onLoginClick }: HeaderProps) {
             {user ? (
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-full text-[13px] font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                className="flex items-center gap-2 px-5 py-2.5 border border-gray-300 rounded-full text-[15px] font-normal text-gray-800 hover:bg-gray-50 transition-colors"
               >
-                <LogOutIcon size={14} />
+                <LogOutIcon size={16} />
                 <span className="hidden sm:inline">Sign out</span>
               </button>
             ) : (
               <button
                 onClick={onLoginClick}
-                className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-full text-[13px] font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                className="flex items-center gap-2 px-5 py-2.5 border border-gray-300 rounded-full text-[15px] font-normal text-gray-800 hover:bg-gray-50 transition-colors"
               >
-                <UserIcon size={14} />
+                <UserIcon size={16} />
                 <span>Sign in</span>
               </button>
             )}
@@ -171,11 +171,11 @@ export const Header = memo(function Header({ onLoginClick }: HeaderProps) {
 
       {/* Full-width Dropdown Menu */}
       {isMenuOpen && (
-        <div className="fixed inset-0 z-40 bg-white" style={{ top: '60px' }}>
-          <div className="max-w-[1400px] mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-0 min-h-[calc(100vh-60px)]">
+        <div className="fixed inset-0 z-40 bg-white" style={{ top: '70px' }}>
+          <div className="max-w-[1400px] mx-auto px-6">
+            <div className="grid grid-cols-1 md:grid-cols-[320px_1fr] gap-0 min-h-[calc(100vh-70px)]">
               {/* Left: Main Menu */}
-              <nav className="py-6 border-r border-gray-100">
+              <nav className="py-8 md:border-r border-gray-100">
                 {menuItems.map((item) => (
                   <button
                     key={item.label}
@@ -186,16 +186,16 @@ export const Header = memo(function Header({ onLoginClick }: HeaderProps) {
                         setIsMenuOpen(false);
                       }
                     }}
-                    className={`w-full flex items-center justify-between py-4 px-2 text-left transition-colors ${
+                    className={`w-full flex items-center justify-between py-4 px-3 text-left transition-colors rounded-lg ${
                       activeSubmenu === item.label
-                        ? 'text-blue-600 bg-blue-50 rounded-lg'
-                        : 'text-gray-900 hover:bg-gray-50 rounded-lg'
+                        ? 'text-blue-600 bg-blue-50'
+                        : 'text-gray-900 hover:bg-gray-50'
                     }`}
                   >
-                    <span className="text-[15px] font-semibold">{item.label}</span>
+                    <span className="text-[17px] font-semibold">{item.label}</span>
                     {item.submenu && (
                       <ChevronRightIcon
-                        size={18}
+                        size={20}
                         className={activeSubmenu === item.label ? 'text-blue-600' : 'text-gray-400'}
                       />
                     )}
@@ -204,7 +204,7 @@ export const Header = memo(function Header({ onLoginClick }: HeaderProps) {
               </nav>
 
               {/* Right: Submenu */}
-              <div className="py-6 px-8 bg-white">
+              <div className="py-8 px-10 bg-white">
                 {menuItems.map((item) =>
                   item.submenu && activeSubmenu === item.label ? (
                     <div key={item.label}>
@@ -213,7 +213,7 @@ export const Header = memo(function Header({ onLoginClick }: HeaderProps) {
                           key={subitem.label}
                           href={subitem.href}
                           onClick={() => setIsMenuOpen(false)}
-                          className="block py-3 text-[15px] text-gray-700 hover:text-cricket-green transition-colors"
+                          className="block py-4 text-[17px] font-normal text-gray-800 hover:text-blue-600 transition-colors"
                         >
                           {subitem.label}
                         </a>
