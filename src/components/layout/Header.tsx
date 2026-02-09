@@ -80,7 +80,7 @@ export const Header = memo(function Header({ onLoginClick }: HeaderProps) {
   return (
     <>
       <header className="bg-white sticky top-0 z-50 border-b border-gray-100">
-        <div className="max-w-[1400px] mx-auto px-6 flex items-center justify-between h-[70px]">
+        <div className="max-w-[1400px] mx-auto px-6 flex items-center justify-between h-[90px]">
           {/* Left: Menu + Logo */}
           <div className="flex items-center gap-4">
             <button
@@ -96,18 +96,29 @@ export const Header = memo(function Header({ onLoginClick }: HeaderProps) {
             </button>
 
             {/* Logo */}
-            <a href="#home" className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-cricket-green rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-base">BC</span>
-              </div>
+            <a href="#home" className="flex items-center">
+              <img
+                src="/logo.jpg"
+                alt="Wisconsin Cricket"
+                className="h-[80px] w-[80px] object-contain"
+              />
             </a>
 
             {/* Divider */}
-            <div className="h-7 w-px bg-gray-300 mx-1" />
+            <div className="h-10 w-px bg-gray-300 mx-1" />
 
-            {/* Badge */}
-            <div className="w-9 h-9 rounded-full border-2 border-gray-400 flex items-center justify-center">
-              <span className="text-xs font-bold text-gray-700">25</span>
+            {/* Championship Stars */}
+            <div className="flex items-center gap-0.5">
+              {[1, 2, 3].map((star) => (
+                <svg
+                  key={star}
+                  className="w-7 h-7 text-[#1e3a5f]"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+              ))}
             </div>
           </div>
 
@@ -117,7 +128,7 @@ export const Header = memo(function Header({ onLoginClick }: HeaderProps) {
               <a
                 key={link.label}
                 href={link.href}
-                className="text-gray-600 hover:text-gray-900 text-[14px] font-normal transition-colors"
+                className="text-gray-600 hover:text-gray-900 text-[16px] font-normal transition-colors"
               >
                 {link.label}
               </a>
@@ -171,9 +182,9 @@ export const Header = memo(function Header({ onLoginClick }: HeaderProps) {
 
       {/* Full-width Dropdown Menu */}
       {isMenuOpen && (
-        <div className="fixed inset-0 z-40 bg-white" style={{ top: '70px' }}>
+        <div className="fixed inset-0 z-40 bg-white" style={{ top: '90px' }}>
           <div className="max-w-[1400px] mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-[320px_1fr] gap-0 min-h-[calc(100vh-70px)]">
+            <div className="grid grid-cols-1 md:grid-cols-[320px_1fr] gap-0 min-h-[calc(100vh-90px)]">
               {/* Left: Main Menu */}
               <nav className="py-8 md:border-r border-gray-100">
                 {menuItems.map((item) => (
