@@ -1,49 +1,49 @@
-import { memo, useMemo } from 'react';
-import { Countdown } from './Countdown';
-import { Button, ClawScratch, TrophyIcon, MapPinIcon, CalendarIcon, TicketIcon, BellIcon } from '../common';
+import { memo } from 'react';
+import { ChevronRightIcon } from '../common';
+
+interface FeaturedNews {
+  image: string;
+  headline: string;
+  category: string;
+  link?: string;
+}
 
 export const Hero = memo(function Hero() {
-  const tournamentDate = useMemo(() => new Date('2026-03-11T08:00:00-05:00'), []);
+  const featuredNews: FeaturedNews = {
+    image: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=1200&h=800&fit=crop',
+    headline: 'Badger CC wins Midwest Championship Semi-Final',
+    category: 'Match Report',
+  };
 
   return (
-    <section
-      id="home"
-      className="bg-gradient-to-br from-cricket-green via-cricket-green-light to-cricket-green text-cream py-16 px-4 text-center relative overflow-hidden"
-    >
-      {/* Decorative claw scratches */}
-      <ClawScratch
-        className="absolute left-4 top-1/2 -translate-y-1/2 opacity-20"
-        size="xl"
-        direction="right"
-        color="#000000"
-      />
-      <ClawScratch
-        className="absolute right-4 top-1/2 -translate-y-1/2 opacity-20"
-        size="xl"
-        direction="left"
-        color="#000000"
-      />
+    <section id="news" className="bg-white">
+      <div className="max-w-[1400px] mx-auto px-4 py-8">
+        {/* Featured News Card */}
+        <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-0 bg-white rounded-lg overflow-hidden">
+          {/* Featured Image */}
+          <div className="relative aspect-[16/10] lg:aspect-auto lg:min-h-[500px] overflow-hidden rounded-lg">
+            <img
+              src={featuredNews.image}
+              alt={featuredNews.headline}
+              className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+            />
+          </div>
 
-      <div className="relative z-10">
-        <p className="text-gold text-sm font-semibold uppercase tracking-[3px] mb-2 flex items-center justify-center gap-2">
-          <TrophyIcon size={16} /> Upcoming Tournament
-        </p>
-
-        <h2 className="font-headline text-4xl md:text-5xl mb-4">
-          Badger CC @ Nationals
-        </h2>
-
-        <p className="opacity-80 mb-8 flex items-center justify-center gap-2 flex-wrap">
-          <span className="flex items-center gap-1"><MapPinIcon size={14} /> Broward County International Cricket Stadium, Florida</span>
-          <span className="mx-2">|</span>
-          <span className="flex items-center gap-1"><CalendarIcon size={14} /> March 11-15, 2026</span>
-        </p>
-
-        <Countdown targetDate={tournamentDate} />
-
-        <div className="flex justify-center gap-4 flex-wrap">
-          <Button variant="primary"><TicketIcon size={16} /> Get Tickets</Button>
-          <Button variant="secondary"><BellIcon size={16} /> Set Reminder</Button>
+          {/* Featured Content */}
+          <div className="flex flex-col justify-center p-8 lg:p-12">
+            <span className="text-cricket-green text-sm font-semibold uppercase tracking-wide mb-4">
+              {featuredNews.category}
+            </span>
+            <h2 className="font-headline text-3xl lg:text-4xl font-bold text-gray-900 leading-tight mb-6">
+              {featuredNews.headline}
+            </h2>
+            <a
+              href="#matches"
+              className="inline-flex items-center gap-2 text-cricket-green font-semibold hover:gap-3 transition-all"
+            >
+              Read more <ChevronRightIcon size={18} />
+            </a>
+          </div>
         </div>
       </div>
     </section>
